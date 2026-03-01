@@ -7,12 +7,12 @@ import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 // (Step 3 of the setup guide)
 // ─────────────────────────────────────────────
 const firebaseConfig = {
-  apiKey: "PASTE_YOUR_API_KEY",
-  authDomain: "PASTE_YOUR_AUTH_DOMAIN",
-  projectId: "PASTE_YOUR_PROJECT_ID",
-  storageBucket: "PASTE_YOUR_STORAGE_BUCKET",
-  messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID",
-  appId: "PASTE_YOUR_APP_ID"
+  apiKey: "AIzaSyDE6cnSP-WxTGh7OS7QIZFYe_vNNUzOFLk",
+  authDomain: "chowmoto-rsvp.firebaseapp.com",
+  projectId: "chowmoto-rsvp",
+  storageBucket: "chowmoto-rsvp.firebasestorage.app",
+  messagingSenderId: "246753994914",
+  appId: "1:246753994914:web:4733bfeb2bed1e8a564ffb"
 };
 // ─────────────────────────────────────────────
 
