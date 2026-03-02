@@ -1,26 +1,8 @@
 import { useState, useEffect } from "react";
-import { initializeApp } from "firebase/app";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
-
-// ─────────────────────────────────────────────
-// PASTE YOUR FIREBASE CONFIG HERE
-// (Step 3 of the setup guide)
-// ─────────────────────────────────────────────
-const firebaseConfig = {
-  apiKey: "AIzaSyDE6cnSP-WxTGh7OS7QIZFYe_vNNUzOFLk",
-  authDomain: "chowmoto-rsvp.firebaseapp.com",
-  projectId: "chowmoto-rsvp",
-  storageBucket: "chowmoto-rsvp.firebasestorage.app",
-  messagingSenderId: "246753994914",
-  appId: "1:246753994914:web:4733bfeb2bed1e8a564ffb"
-};
-// ─────────────────────────────────────────────
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
 const CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700;1,800&family=Montserrat:wght@300;400;500&display=swap');
+  @import url('https://db.onlinewebfonts.com/c/014289f5382a33edc09284a90947e6fd?family=Moret+Extrabold');
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -85,9 +67,9 @@ const CSS = `
     opacity: 0.65;
   }
   .hero-names {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Moret Extrabold', serif;
     font-size: clamp(56px, 11vw, 108px);
-    font-weight: 800;
+    font-weight: 400;
     line-height: 0.95;
     color: var(--burg);
     letter-spacing: -1px;
@@ -140,9 +122,9 @@ const CSS = `
   /* ── STEPS ── */
   .step { animation: fadeUp 0.4s ease both; }
   .step-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Moret Extrabold', serif;
     font-size: 28px;
-    font-weight: 800;
+    font-weight: 400;
     color: var(--burg);
     margin-bottom: 8px;
     text-align: center;
@@ -165,9 +147,9 @@ const CSS = `
   .name-input {
     width: 100%;
     padding: 18px 20px;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Moret Extrabold', serif;
     font-size: 22px;
-    font-weight: 700;
+    font-weight: 400;
     color: var(--burg);
     background: rgba(255,255,255,0.45);
     border: 1px solid var(--border-strong);
@@ -182,7 +164,7 @@ const CSS = `
   .name-input::placeholder {
     color: rgba(90,14,30,0.3);
     font-style: italic;
-    font-weight: 700;
+    font-weight: 400;
   }
 
   /* ── SEARCH RESULTS ── */
@@ -211,9 +193,9 @@ const CSS = `
   .no-result {
     text-align: center;
     padding: 22px;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Moret Extrabold', serif;
     font-style: italic;
-    font-weight: 700;
+    font-weight: 400;
     color: var(--burg);
     font-size: 15px;
     background: rgba(255,255,255,0.45);
@@ -224,9 +206,9 @@ const CSS = `
 
   /* ── VENUES ── */
   .guest-greeting {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Moret Extrabold', serif;
     font-size: 28px;
-    font-weight: 800;
+    font-weight: 400;
     text-align: center;
     color: var(--burg);
     margin-bottom: 4px;
@@ -334,9 +316,9 @@ const CSS = `
     opacity: 0.6;
   }
   .plusone-sub {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Moret Extrabold', serif;
     font-style: italic;
-    font-weight: 700;
+    font-weight: 400;
     font-size: 14px;
     color: var(--burg);
   }
@@ -411,15 +393,15 @@ const CSS = `
     border: none;
     border-bottom: 1px solid var(--border-strong);
     padding: 8px 0;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Moret Extrabold', serif;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 400;
     color: var(--burg);
     outline: none;
     transition: border-color 0.2s;
   }
   .contact-input:focus { border-bottom-color: var(--burg); }
-  .contact-input::placeholder { opacity: 0.25; font-style: italic; font-weight: 700; }
+  .contact-input::placeholder { opacity: 0.25; font-style: italic; font-weight: 400; }
 
   /* Submit spacing */
   .submit-btn {
@@ -450,9 +432,9 @@ const CSS = `
     margin-bottom: 24px;
   }
   .confirm-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Moret Extrabold', serif;
     font-size: 34px;
-    font-weight: 800;
+    font-weight: 400;
     color: var(--burg);
     margin-bottom: 8px;
     line-height: 1.15;
@@ -518,9 +500,9 @@ const CSS = `
     padding: 20px 0 28px;
   }
   .notfound-note {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Moret Extrabold', serif;
     font-style: italic;
-    font-weight: 700;
+    font-weight: 400;
     font-size: 15px;
     color: var(--burg);
     margin-bottom: 10px;
@@ -560,6 +542,8 @@ export default function GuestRSVP() {
   useEffect(() => {
     async function load() {
       try {
+        const { getFirestore, doc, getDoc, setDoc } = await import("firebase/firestore");
+        const db = getFirestore();
         const ref = doc(db, "wedding", "guests");
         const snap = await getDoc(ref);
         if (snap.exists() && snap.data().list?.length > 0) {
@@ -569,7 +553,6 @@ export default function GuestRSVP() {
           await setDoc(ref, { list: SEED_GUESTS });
         }
       } catch (e) {
-        console.error("Firebase load error:", e);
         setGuests(SEED_GUESTS);
       }
     }
@@ -577,11 +560,24 @@ export default function GuestRSVP() {
   }, []);
 
   const results = query.trim().length >= 2
-    ? guests.filter(g => g.name.toLowerCase().includes(query.toLowerCase()))
+    ? guests.filter(g =>
+        g.name.toLowerCase().includes(query.toLowerCase()) ||
+        (g.plusOneName && g.plusOneName.toLowerCase().includes(query.toLowerCase()))
+      )
     : [];
 
   function selectGuest(g) {
-    setSelected(g);
+    // Check if the query matched the plus-one name rather than the primary guest
+    const searchedAsPlusOne = g.plusOneName &&
+      g.plusOneName.toLowerCase().includes(query.toLowerCase()) &&
+      !g.name.toLowerCase().includes(query.toLowerCase());
+
+    // If the plus one searched, swap who appears where
+    const displayGuest = searchedAsPlusOne
+      ? { ...g, name: g.plusOneName, plusOneName: g.name, _primaryId: g.id }
+      : g;
+
+    setSelected(displayGuest);
     setVenues({ Picnic: g.venues?.Picnic ?? null, Ortliebs: g.venues?.Ortliebs ?? null });
     setPlusOne(g.plusOneConfirmed ?? false);
     setContactEmail(g.contactEmail ?? g.email ?? "");
@@ -594,17 +590,14 @@ export default function GuestRSVP() {
   }
 
   async function submit() {
+    const primaryId = selected._primaryId ?? selected.id;
     const updated = guests.map(g =>
-      g.id === selected.id
+      g.id === primaryId
         ? { ...g, venues: { ...g.venues, ...venues }, plusOneConfirmed: plusOne, contactEmail, contactPhone }
         : g
     );
     setGuests(updated);
-    try {
-      await setDoc(doc(db, "wedding", "guests"), { list: updated });
-    } catch (e) {
-      console.error("Firebase save error:", e);
-    }
+    await window.storage.set("wedding_guests", JSON.stringify(updated)).catch(() => {});
     setStep("confirm");
   }
 
@@ -649,12 +642,24 @@ export default function GuestRSVP() {
 
             {query.trim().length >= 2 && results.length > 0 && (
               <div className="results-list">
-                {results.map(g => (
-                  <div key={g.id} className="result-item" onClick={() => selectGuest(g)}>
-                    <span>{g.name}</span>
-                    <span className="result-arrow">→</span>
-                  </div>
-                ))}
+                {results.map(g => {
+                  const matchedAsPlusOne = g.plusOneName &&
+                    g.plusOneName.toLowerCase().includes(query.toLowerCase()) &&
+                    !g.name.toLowerCase().includes(query.toLowerCase());
+                  return (
+                    <div key={g.id} className="result-item" onClick={() => selectGuest(g)}>
+                      <span>
+                        {matchedAsPlusOne ? g.plusOneName : g.name}
+                        {matchedAsPlusOne && (
+                          <span style={{ fontSize: 10, opacity: 0.5, marginLeft: 8, letterSpacing: 1 }}>
+                            + {g.name}
+                          </span>
+                        )}
+                      </span>
+                      <span className="result-arrow">→</span>
+                    </div>
+                  );
+                })}
               </div>
             )}
 
