@@ -111,12 +111,12 @@ const CSS = `
   }
   .hero-rsvp-line {
     font-family: 'Moret Extrabold', serif;
-    font-size: clamp(13px, 3vw, 18px);
+    font-size: clamp(16px, 4vw, 22px);
     color: var(--burg);
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     text-transform: uppercase;
     margin-top: 0px;
-    opacity: 0.85;
+    opacity: 1;
   }
   .hero-date { display: none; }
   .hero-divider { display: none; }
@@ -145,12 +145,12 @@ const CSS = `
   .step-subtitle {
     font-size: 13px;
     font-weight: 700;
-    letter-spacing: 3px;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--burg);
     text-align: center;
     margin-bottom: 32px;
-    opacity: 0.85;
+    opacity: 1;
   }
 
   /* ── NAME INPUT ── */
@@ -231,12 +231,12 @@ const CSS = `
   .guest-sub {
     font-size: 13px;
     font-weight: 700;
-    letter-spacing: 3px;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--burg);
     text-align: center;
     margin-bottom: 32px;
-    opacity: 0.85;
+    opacity: 1;
   }
 
   .venues-stack {
