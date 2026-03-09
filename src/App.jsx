@@ -143,7 +143,8 @@ const CSS = `
     text-align: center;
   }
   .step-subtitle {
-    font-size: 9px;
+    font-size: 13px;
+    font-weight: 700;
     letter-spacing: 3px;
     text-transform: uppercase;
     color: var(--burg);
@@ -162,7 +163,7 @@ const CSS = `
     padding: 18px 20px;
     font-family: 'Moret Extrabold', serif;
     font-size: 22px;
-    font-weight: 400;
+    font-weight: 700;
     color: var(--burg);
     background: rgba(255,255,255,0.45);
     border: 1px solid var(--border-strong);
@@ -228,7 +229,8 @@ const CSS = `
   }
   .guest-greeting em { font-style: italic; }
   .guest-sub {
-    font-size: 9px;
+    font-size: 13px;
+    font-weight: 700;
     letter-spacing: 3px;
     text-transform: uppercase;
     color: var(--burg);
@@ -262,7 +264,7 @@ const CSS = `
     letter-spacing: 4px;
     text-transform: uppercase;
     color: var(--burg);
-    font-weight: 600;
+    font-weight: 700;
   }
   .venue-detail {
     font-family: 'Montserrat', sans-serif;
