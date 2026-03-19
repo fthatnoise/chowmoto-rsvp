@@ -554,6 +554,8 @@ export default function GuestRSVP() {
   const [plusOne, setPlusOne] = useState(false);
   const [contactEmail, setContactEmail] = useState("");
   const [contactPhone, setContactPhone] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -630,12 +632,19 @@ export default function GuestRSVP() {
     );
     setGuests(updated);
     guestsRef.current = updated;
+    setSaving(true);
+    setSaveError(false);
     try {
+      console.log("Saving RSVP for id:", primaryId, "venues:", venues);
       await setDoc(doc(db, "wedding", "guests"), { list: updated });
+      console.log("RSVP saved successfully");
+      setStep("confirm");
     } catch (e) {
       console.error("Firebase save error:", e);
+      setSaveError(true);
+    } finally {
+      setSaving(false);
     }
-    setStep("confirm");
   }
 
   const canSubmit = venues.Picnic !== null && venues.Ortliebs !== null;
@@ -787,13 +796,18 @@ export default function GuestRSVP() {
               />
             </div>
 
-            <button className="submit-btn" disabled={!canSubmit} onClick={submit}>
-              Submit RSVP
+            <button className="submit-btn" disabled={!canSubmit || saving} onClick={submit}>
+              {saving ? "Saving..." : "Submit RSVP"}
             </button>
 
-            {!canSubmit && (
-              <p style={{ textAlign: "center", fontSize: 11, color: "var(--blush)", marginTop: 12, letterSpacing: "1px" }}>
+            {!canSubmit && !saving && (
+              <p style={{ textAlign: "center", fontSize: 11, color: "var(--burg)", marginTop: 12, letterSpacing: "1px", opacity: 0.5 }}>
                 Please respond to both events above
+              </p>
+            )}
+            {saveError && (
+              <p style={{ textAlign: "center", fontSize: 11, color: "var(--burg)", marginTop: 12, letterSpacing: "1px", fontWeight: 600 }}>
+                ⚠ Save failed — please check your connection and try again
               </p>
             )}
           </div>
