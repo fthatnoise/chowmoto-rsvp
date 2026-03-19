@@ -577,8 +577,6 @@ export default function GuestRSVP() {
           });
           setGuests(merged);
           guestsRef.current = merged;
-          // Write merged list back so Firebase always has full guest data
-          await setDoc(ref, { list: merged });
         } else {
           setGuests(SEED_GUESTS);
           guestsRef.current = SEED_GUESTS;
