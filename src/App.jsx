@@ -555,7 +555,7 @@ export default function GuestRSVP() {
   const [contactEmail, setContactEmail] = useState("");
   const [contactPhone, setContactPhone] = useState("");
   const [saving, setSaving] = useState(false);
-  const [saveError, setSaveError] = useState(false);
+  const [saveError, setSaveError] = useState("");
 
   useEffect(() => {
     async function load() {
@@ -641,7 +641,7 @@ export default function GuestRSVP() {
       setStep("confirm");
     } catch (e) {
       console.error("Firebase save error:", e);
-      setSaveError(true);
+      setSaveError(e?.message || e?.code || String(e));
     } finally {
       setSaving(false);
     }
@@ -807,7 +807,7 @@ export default function GuestRSVP() {
             )}
             {saveError && (
               <p style={{ textAlign: "center", fontSize: 11, color: "var(--burg)", marginTop: 12, letterSpacing: "1px", fontWeight: 600 }}>
-                ⚠ Save failed — please check your connection and try again
+                ⚠ Save failed: {saveError}
               </p>
             )}
           </div>
