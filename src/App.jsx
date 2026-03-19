@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { initializeApp } from "firebase/app";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
@@ -546,6 +546,7 @@ const SEED_GUESTS = [{"id":1,"name":"Jeffrey Chow","plusOne":false,"plusOneName"
 
 export default function GuestRSVP() {
   const [guests, setGuests] = useState([]);
+  const guestsRef = useRef([]);
   const [query, setQuery] = useState("");
   const [step, setStep] = useState("search"); // search | rsvp | confirm
   const [selected, setSelected] = useState(null);
@@ -575,13 +576,18 @@ export default function GuestRSVP() {
             };
           });
           setGuests(merged);
+          guestsRef.current = merged;
+          // Write merged list back so Firebase always has full guest data
+          await setDoc(ref, { list: merged });
         } else {
           setGuests(SEED_GUESTS);
+          guestsRef.current = SEED_GUESTS;
           await setDoc(ref, { list: SEED_GUESTS });
         }
       } catch (e) {
         console.error("Firebase load error:", e);
         setGuests(SEED_GUESTS);
+        guestsRef.current = SEED_GUESTS;
       }
     }
     load();
@@ -619,12 +625,13 @@ export default function GuestRSVP() {
 
   async function submit() {
     const primaryId = selected._primaryId ?? selected.id;
-    const updated = guests.map(g =>
+    const updated = guestsRef.current.map(g =>
       g.id === primaryId
         ? { ...g, venues: { ...g.venues, ...venues }, plusOneConfirmed: plusOne, contactEmail, contactPhone }
         : g
     );
     setGuests(updated);
+    guestsRef.current = updated;
     try {
       await setDoc(doc(db, "wedding", "guests"), { list: updated });
     } catch (e) {
