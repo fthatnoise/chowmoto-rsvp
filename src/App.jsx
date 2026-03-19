@@ -634,9 +634,11 @@ export default function GuestRSVP() {
     guestsRef.current = updated;
     setSaving(true);
     setSaveError(false);
+    // Firebase rejects undefined values — strip them out by round-tripping through JSON
+    const sanitize = (obj) => JSON.parse(JSON.stringify(obj, (k, v) => v === undefined ? null : v));
     try {
       console.log("Saving RSVP for id:", primaryId, "venues:", venues);
-      await setDoc(doc(db, "wedding", "guests"), { list: updated });
+      await setDoc(doc(db, "wedding", "guests"), { list: sanitize(updated) });
       console.log("RSVP saved successfully");
       setStep("confirm");
     } catch (e) {
